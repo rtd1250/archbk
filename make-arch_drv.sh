@@ -26,7 +26,7 @@ install_arch () {
     }
 
     if [ "$(whoami)" != "root" ]; then
-      echo "this script must be ran as root"
+      echo "this script must be run as root"
       echo
       exit 1
     fi
@@ -142,7 +142,7 @@ EOF
   P2_SIZE="$(expr $DEVICE_SIZE - $P2_BEGINNING_SECTOR)"
 
   echo
-  echo "$step) creating root partition on target device"
+  echo "$step) creating root partition on target device /dev/$media"
   step="$(expr $step + 1)"
   add_root_partition="$(echo "cgpt add -i 2 -t data -b $P2_BEGINNING_SECTOR -s $P2_SIZE -l Root /dev/$media")"
 
@@ -224,7 +224,7 @@ EOF
 
   if [ ${#media} -lt 4 ]; then
     echo "drives will not boot from the blue USB 3.0 port"
-    echo "remember to plug drive into black USB 2.0 port to boot from it "
+    echo "remember to plug the drive into the black USB 2.0 port to boot from it"
     echo
     read -p "poweroff this device now? [y/N] : " b
     echo
@@ -234,7 +234,7 @@ EOF
   else
     read -p "reboot now? [y/N] : " c
     echo
-    if [  $c = 'y' ]; then
+    if [ $c = 'y' ]; then
       reboot
     fi
   fi
@@ -267,13 +267,13 @@ init () {
         echo '# more than one install media was detected. #' 1>&2
         echo "#############################################" 1>&2
         echo 1>&2
-        echo 'Make sure that only one media storage device (USB drive / SD card / microSD card) is plugged into this device.)' 1>&2
+        echo 'Make sure that only one media storage device (USB drive / SD card / microSD card) is plugged into the chromebook.' 1>&2
         echo 1>&2
         echo 1>&2
         echo "to safely remove a media storage device:" 1>&2
         echo "    1) go to files," 1>&2
         echo "    2) click the eject button next to the device you wish to remove," 1>&2
-        echo "    3) unpug the device" 1>&2
+        echo "    3) unplug the device" 1>&2
         echo 1>&2
         echo 1>&2
         read -p "press any key to continue..." n
@@ -284,7 +284,7 @@ init () {
         echo '# no install media was detected. #' 1>&2
         echo "##################################" 1>&2
         echo 1>&2
-        echo 'insert the media you want arch linux to be installed on,' 1>&2
+        echo 'Insert the media you want arch linux to be installed on.' 1>&2
         echo 1>&2
         echo 1>&2
         read -p "press any key to continue..." n
@@ -304,10 +304,10 @@ init () {
     echo 1>&2
     echo "    1) go to files," 1>&2
     echo "    2) click the eject button next to the device you wish to remove," 1>&2
-    echo "    3) unpug the device" 1>&2
+    echo "    3) unplug the device" 1>&2
     echo 1>&2
     echo 1>&2
-    read -p "press any continue..." n
+    read -p "press any key to continue..." n
     media="$(find_target_device)"
   fi
 
@@ -340,11 +340,11 @@ init () {
   echo 1>&2
   read -p "do you want to continue with this install? [y/N] : " a
   if [ $a ]; then
-    if [ $a = 'n' ]; then
-      exit 1
+    if [ $a = 'y' ]; then
+      continue
     fi
   else
-    continue
+    exit 1
   fi
 }
 
@@ -407,7 +407,7 @@ essentials () {
 
   # if script is not ran as root, exit 
   if [ "$(whoami)" != "root" ]; then
-    echo "this script must be ran as root"
+    echo "this script must be run as root"
     echo
     exit 1
   fi
@@ -460,6 +460,9 @@ essentials () {
           echo 1>&2
           echo "Arch Linux ARM will be downloaded" 1>&2
         fi
+      else
+        echo 1>&2
+        echo "Arch Linux ARM will be downloaded" 1>&2
       fi
     fi
   }
